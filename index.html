@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <!-- Basic Page Needs
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta charset="utf-8">
+  <title>Munchkin Counter</title>
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <!-- Mobile Specific Metas
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- FONT
+       –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <!--<link href='http://fonts.googleapis.com/css?family=Patrick+Hand+SC' rel='stylesheet' type='text/css'> -->
+  <!--<link href='http://fonts.googleapis.com/css?family=Dosis:200,400,600' rel='stylesheet' type='text/css'> -->
+
+  <!-- CSS
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="stylesheet" href="css/normalize.css">
+  <link rel="stylesheet" href="css/skeleton.css">
+  <link rel="stylesheet" href="css/stylesheet.css">
+
+  <!-- Favicon
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="icon" type="image/png" href="images/favicon.png">
+
+</head>
+<body>
+
+  <!-- Primary Page Layout
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <div class="container glass" id="mainContainer">
+    <div class="title">
+      <h4>Munchkin Counter</h4>
+      <p>by <a href="http://www.oscarello.me">oscarello.me</a></p>
+    </div>
+    <div class="content" id="contentDiv">
+      <div class="row" id="setupRow">
+        <div class="six columns">
+          <form onsubmit="addPlayer(); return false" id="frmNewPlayer">
+            <label for "txtPlayerName" class="u-full-width">New Player Name</label>
+            <input type="text" class="u-full-width" name="txtPlayerName" id="txtPlayerName" placeholder="Player Name..." tabindex=1></input>
+            <button type="submit" class="button-primary" id="btnAddPlayer" tabindex=2>Submit</button>
+          </form>
+        </div>
+        <div class="six columns">
+          <table id="tableScoreboard" class="u-full-width">
+            <thead>
+              <tr>
+                <th style="min-width:70%;">Name</th>
+                <th>Wins</th>
+                <th></th>
+              </tr>
+            </thead>
+          </table>
+        </div>
+      </div>
+      <div class="row">
+        <div class="four columns offset-by-four">
+          <button class="button-primary u-full-width" id="btnBeginGame" onclick="beginGame()" tabindex=3>Begin Game</button>
+        </div>
+      </div>
+      <hr>
+      <div class="row">
+        <div id="playersRow">
+        </div>
+      </div>
+    </div>
+  </div>
+
+<!-- End Document
+     –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <script src="script/munchkin.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>
+</body>
+</html>
