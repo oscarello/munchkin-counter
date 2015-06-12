@@ -86,3 +86,23 @@ body {
 .deleteUserLink {
     text-decoration: none;
 }
+
+.button-cancel {
+    background-color: #f03935;
+    border-color: #f03935;
+    color: white;
+}
+
+.button-cancel:hover {
+    background-color: #d7332f;
+    border-color: #d7332f;
+    color: white;
+}
+
+.formStats {
+    margin-bottom: 1rem;
+}
+
+#resultsRow{
+    text-align:center;
+}

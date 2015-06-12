@@ -57,16 +57,21 @@
           </table>
         </div>
       </div>
-      <div class="row">
+      <div class="row" id="buttonsRow">
         <div class="four columns offset-by-four">
           <button class="button-primary u-full-width" id="btnBeginGame" onclick="beginGame()" tabindex=3>Begin Game</button>
+          <button class="button-cancel u-full-width" id="btnCancelGame" onclick="cancelGame()" style="display:none;" tabindex=4>Cancel Game</button>
         </div>
       </div>
-      <hr>
-      <div class="row">
-        <div id="playersRow">
-        </div>
+      <div class="row" id="playersRow" style="display:none;">
       </div>
+      <div class="row" id="resultsRow" style="display:none;">
+        <hr>
+        <h1 id="winnerMessage"><span id="winnerSpan"></span> won!<h1>
+        <div id="wonDiv">
+          <button class="button-primary" id="btnEndGame" onclick="endGame();">Indeed</button>
+          <button class="button-cancel" id="btnContinue" onclick="continueGame();">Oops, we made a mistake</button>
+        </div>
     </div>
   </div>
 

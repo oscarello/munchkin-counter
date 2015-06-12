@@ -6,23 +6,24 @@
 var currentPlayers = [];
 
 function addPlayer() {
-     var newPlayerName = document.getElementById("txtPlayerName").value;
+    var newPlayerName = $("#txtPlayerName").val();
 
-     if (newPlayerName.length > 0) {
+    if (newPlayerName.length > 0) {
+        /* Add player to current players */
         var newPlayer = {name:newPlayerName,
-                         wins:0,
-                         points:{
-                             level:0,
-                             gear:0
-                         }};
+                         wins:0
+                        };
         currentPlayers.push(newPlayer);
 
+        /* Sort and display the users list */
         sortJSON(currentPlayers, 'name', "asc");
         updateUsersTable();
 
-        document.getElementById("txtPlayerName").value = "";
-        document.getElementById("txtPlayerName").focus();
-    }
+        /* Clear the player name texted and make the txt to acquire focus. */
+        $("#txtPlayerName").val("");
+        $("#txtPlayerName").focus();
+     }
+    return false;
 }
 
 function deletePlayer(player) {
@@ -72,18 +73,31 @@ function updateStrength(player) {
               return Number(value);
         return 0;
     };
-    
-    var levelPoints = filterInt(document.getElementById("txtLevelPoints" + player).value);
-    var itemPoints = filterInt(document.getElementById("txtItemPoints" + player).value);
+
+    var levelPoints = filterInt($("#txtLevelPoints" + player).val());
+    var itemPoints = filterInt($("#txtItemPoints" + player).val());
     strengthSpan.innerText= levelPoints + itemPoints;
 
-    
+    // If someone won
+    if (levelPoints >= 10) {
+        $("#btnEndGame").attr("onclick", "endGame(" + player + ")").show();
+        $("#btnContinue").show();
+
+        $("#winnerSpan").text(currentPlayers[player].name);
+        $("#resultsRow").show();
+    }
 }
 
 function beginGame(){
+    /* We make sure we start without any remnants from an old game. */
+    $("#playersRow").empty();
+
+    /* We shouldn't display any winner results yet. */
+    $("#resultsRow").hide();
+
     var index;
     var mainContainer = document.getElementById("playersRow");
-    
+
     for (index = 0; index < currentPlayers.length; index++){
         var playerDiv = document.createElement("div");
         playerDiv.id = "playerDiv" + index;
@@ -97,10 +111,10 @@ function beginGame(){
             "<form id='formStats" + index + "' class='formStats'>"
             + "<label for 'txtLevelPoints'>Level</label>"
             + "<input type='text' name='txtLevelPoints" + index + "' id='txtLevelPoints" + index + "' value='0' "
-            + "size='2' onkeyup='updateStrength(" + index + ")'></input><br>"
+            + "size='2' onkeyup='updateStrength(" + index + ")' class='txtLevelPoints'></input><br>"
             + "<label for 'txtItemPoints'>Items</label>"
             + "<input type='text' name='txtItemPoints" + index + "' id='txtItemPoints" + index + "' value='0' "
-            + "size='2' onkeyup='updateStrength(" + index + ")'></input><br>"
+            + "size='2' onkeyup='updateStrength(" + index + ")' class='txtItemPoints'></input><br>"
             + "</form";
 
         playerDiv.appendChild(playerStatsDiv);
@@ -110,12 +124,53 @@ function beginGame(){
         playerStrengthDiv.className = "player-strength-div";
 
         playerStrengthDiv.innerHTML =
-/*            "<h5>Strength</h5>"*/
              "<span class='strengthSpan' id='strengthSpan" + index + "'>0</span>";
 
         playerDiv.appendChild(playerStrengthDiv);
 
         mainContainer.appendChild(playerDiv);
     }
+
+    /* We shouldn't make any hanges on the players at this point */
+    $("#setupRow").hide( 500 );
+    $("#playersRow").show();
+
+    $("#btnBeginGame").hide();
+    $("#btnCancelGame").show();
+
     return false;
+}
+
+function cancelGame() {
+    $("#setupRow").show( 500 );
+    $("#playersRow").hide();
+
+    $("#btnBeginGame").show();
+    $("#btnCancelGame").hide();
+
+    /* We get rid of the canceled game points */
+    $("#playersRow").empty();
+}
+
+function endGame(player) {
+    /* Update and show the players games won data */
+    currentPlayers[player].wins = Number(currentPlayers[player].wins) + 1;
+    updateUsersTable();
+
+    $("#setupRow").show( 500 );
+    $("#btnBeginGame").show();
+    $("#btnCancelGame").hide();
+
+    /* We hide these buttons so no-one can win twice by mistake, we don't hide
+       the results div because we want to show the last winner */
+    $("#btnEndGame").hide();
+    $("#btnContinue").hide();
+
+    /* We also want to show the last game player stats, but they shouldn't be modifiable */
+    $(".txtLevelPoints").prop("disabled", true);
+    $(".txtItemPoints").prop("disabled", true);
+}
+
+function continueGame() {
+    $("#resultsRow").hide();
 }
